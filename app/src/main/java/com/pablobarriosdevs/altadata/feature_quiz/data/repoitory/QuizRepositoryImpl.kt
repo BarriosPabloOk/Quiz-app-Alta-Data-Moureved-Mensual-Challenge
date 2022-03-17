@@ -5,6 +5,7 @@ import com.pablobarriosdevs.altadata.feature_quiz.data.provider.QuizProvider
 import com.pablobarriosdevs.altadata.feature_quiz.domain.model.Player
 import com.pablobarriosdevs.altadata.feature_quiz.domain.model.Quiz
 import com.pablobarriosdevs.altadata.feature_quiz.domain.repository.QuizRepository
+import kotlinx.coroutines.flow.Flow
 
 class QuizRepositoryImpl(
     private val dao:PlayerDao,
@@ -19,7 +20,7 @@ class QuizRepositoryImpl(
         return provider.randomQuiz()
     }
 
-    override suspend fun getPlayers(): List<Player>? {
+    override suspend fun getPlayers(): Flow<List<Player>> {
         return dao.getPlayers()
     }
 }

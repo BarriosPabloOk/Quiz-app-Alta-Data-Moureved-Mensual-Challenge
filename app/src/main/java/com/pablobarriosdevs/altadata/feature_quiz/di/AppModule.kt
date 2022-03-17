@@ -8,6 +8,10 @@ import com.pablobarriosdevs.altadata.feature_quiz.data.local.PlayerDatabase
 import com.pablobarriosdevs.altadata.feature_quiz.data.provider.QuizProvider
 import com.pablobarriosdevs.altadata.feature_quiz.data.repoitory.QuizRepositoryImpl
 import com.pablobarriosdevs.altadata.feature_quiz.domain.repository.QuizRepository
+import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.GetPlayerWithHighScore_UC
+import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.GetSingleQuestion_UC
+import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.SaveNewPlayer_UC
+import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.wrapper.UseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +36,16 @@ object AppModule {
     @Singleton
     fun providesRepository(dao:PlayerDao, provider:QuizProvider): QuizRepositoryImpl{
         return QuizRepositoryImpl(dao = dao, provider = provider)
+    }
+
+    @Provides
+    @Singleton
+    fun providesQuizUseWrapper(repo: QuizRepository): UseCases{
+        return UseCases(
+            getPlayers = GetPlayerWithHighScore_UC(repo),
+            getSingleQuestion = GetSingleQuestion_UC(repo),
+            saveNewPlayer = SaveNewPlayer_UC(repo),
+        )
     }
 }
 
