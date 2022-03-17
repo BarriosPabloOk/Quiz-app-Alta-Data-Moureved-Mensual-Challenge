@@ -7,6 +7,7 @@ import com.pablobarriosdevs.altadata.feature_quiz.domain.model.Player
 @Database(
     entities = [Player::class],
     version = 1,
+    exportSchema = false,
 )
 abstract class PlayerDatabase :RoomDatabase() {
     abstract val dao: PlayerDao

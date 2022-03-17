@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface QuizRepository {
 
-    suspend fun savePlayer(name:String, score: Int)
+    suspend fun savePlayer(player: Player)
     suspend fun getQuestion() : Quiz?
-    suspend fun getPlayers() : Flow<List<Player>>
+    fun getPlayers() : Flow<List<Player>>
 
 }

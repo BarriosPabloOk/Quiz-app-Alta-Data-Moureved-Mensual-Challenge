@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home.HomeScreen
 import com.pablobarriosdevs.altadata.ui.theme.AltaDataTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,22 +23,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    HomeScreen()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    AltaDataTheme {
-        Greeting("Android")
-    }
-}

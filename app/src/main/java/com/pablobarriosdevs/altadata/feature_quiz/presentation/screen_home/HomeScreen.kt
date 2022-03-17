@@ -1,0 +1,42 @@
+package com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home.components.RankingButton
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home.components.StartButton
+
+@Composable
+fun HomeScreen(
+    //navController:NavController,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.primary),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom,
+
+    ) {
+        StartButton(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.width(210.dp)
+        )
+        Spacer(modifier = Modifier.height(30.dp))
+        RankingButton(onClick = { /*TODO*/ })
+        Spacer(modifier = Modifier.height(50.dp))
+
+    }
+
+}
+
+@Preview
+@Composable
+fun PrevHomeScreen() {
+    HomeScreen()
+}

@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.Flow
 interface PlayerDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun savePlayer(name:String, score: Int)
+    suspend fun savePlayer(player: Player)
 
     @Query("SELECT * FROM player")
-    suspend fun getPlayers() : Flow<List<Player>>
+    fun getPlayers() : Flow<List<Player>>
 
 }

@@ -12,15 +12,15 @@ class QuizRepositoryImpl(
     private val provider: QuizProvider
 ): QuizRepository {
 
-    override suspend fun savePlayer(name: String, score: Int) {
-        dao.savePlayer(name, score)
+    override suspend fun savePlayer(player: Player) {
+        dao.savePlayer(player)
     }
 
     override suspend fun getQuestion(): Quiz? {
         return provider.randomQuiz()
     }
 
-    override suspend fun getPlayers(): Flow<List<Player>> {
+    override fun getPlayers(): Flow<List<Player>> {
         return dao.getPlayers()
     }
 }
