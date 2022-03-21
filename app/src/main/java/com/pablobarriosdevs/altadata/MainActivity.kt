@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home.HomeScreen
 import com.pablobarriosdevs.altadata.ui.theme.AltaDataTheme
+import dagger.hilt.android.AndroidEntryPoint
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -2,6 +2,7 @@ package com.pablobarriosdevs.altadata.feature_quiz.domain.repository
 
 import com.pablobarriosdevs.altadata.feature_quiz.domain.model.Player
 import com.pablobarriosdevs.altadata.feature_quiz.domain.model.Quiz
+import dagger.Provides
 import kotlinx.coroutines.flow.Flow
 
 
