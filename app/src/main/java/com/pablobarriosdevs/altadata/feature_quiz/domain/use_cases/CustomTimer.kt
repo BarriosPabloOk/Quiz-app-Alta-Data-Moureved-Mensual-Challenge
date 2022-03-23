@@ -8,7 +8,7 @@ import androidx.compose.runtime.MutableState
 All de logic from countdown are moved to this use case
 because help to keep clean the viewmodel class
 */
-class CustomTimerUC(
+class CustomTimer(
     var timerState: MutableState<Long>,
     val interval: Long = 1000L,
     var finished: MutableState<Boolean>,

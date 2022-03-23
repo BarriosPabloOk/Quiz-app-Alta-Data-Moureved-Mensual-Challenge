@@ -34,8 +34,12 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesRepository(dao:PlayerDao, provider:QuizProvider): QuizRepositoryImpl{
-        return QuizRepositoryImpl(dao = dao, provider = provider)
+    fun provideQuizProvider():QuizProvider = QuizProvider()
+
+    @Provides
+    @Singleton
+    fun providesRepository(db:PlayerDatabase, provider:QuizProvider): QuizRepository{
+        return QuizRepositoryImpl(db.dao, provider = provider)
     }
 
     @Provides
