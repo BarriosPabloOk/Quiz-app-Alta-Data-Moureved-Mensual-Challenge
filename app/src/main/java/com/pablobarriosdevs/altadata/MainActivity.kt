@@ -10,6 +10,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.navigation.Navigation
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home.HomeScreen
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.QuizScreen
 import com.pablobarriosdevs.altadata.ui.theme.AltaDataTheme
@@ -27,7 +29,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    QuizScreen()
+                    val navController = rememberNavController()
+                    Navigation(navController = navController)
                 }
             }
         }

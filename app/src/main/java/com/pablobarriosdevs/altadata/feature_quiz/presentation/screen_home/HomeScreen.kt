@@ -14,16 +14,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.pablobarriosdevs.altadata.R
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.navigation.Screens
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home.components.RankingButton
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home.components.StartButton
 
 @Composable
 fun HomeScreen(
-    //navController:NavController,
+    navController: NavController,
 ) {
     Image(
-        painter = painterResource(id = R.mipmap.background),
+        painter = painterResource(id = R.mipmap.background_4),
         contentDescription = "Background",
         modifier = Modifier
             .fillMaxSize(),
@@ -39,11 +41,11 @@ fun HomeScreen(
 
         ) {
         StartButton(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(Screens.QuizScreen.route) },
             modifier = Modifier.width(210.dp)
         )
         Spacer(modifier = Modifier.height(30.dp))
-        RankingButton(onClick = { /*TODO*/ })
+        RankingButton(onClick = { navController.navigate(Screens.RankingScreen.route)})
         Spacer(modifier = Modifier.height(50.dp))
 
     }
@@ -53,5 +55,5 @@ fun HomeScreen(
 @Preview(showSystemUi = true, device = Devices.PIXEL_4_XL)
 @Composable
 fun PrevHomeScreen() {
-    HomeScreen()
+    //HomeScreen()
 }

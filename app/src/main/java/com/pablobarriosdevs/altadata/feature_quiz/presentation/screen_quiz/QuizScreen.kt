@@ -10,12 +10,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.pablobarriosdevs.altadata.feature_quiz.core.Constants
 import com.pablobarriosdevs.altadata.feature_quiz.core.formatTime
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.navigation.Screens
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.util.QuizEvent
 
 @Composable
 fun QuizScreen(
-    //navController: NavController,
+    navController: NavController,
     viewModel: QuizViewModel = hiltViewModel()
 ) {
 
@@ -52,10 +55,19 @@ fun QuizScreen(
             }
         }
 
-        if (viewModel.showDialog.value){
+        if (viewModel.showDialog.value && viewModel.questionNumber.value !=10){
             Button(onClick = { viewModel.onEvent(QuizEvent.NextQuestion)
             }) {
-                Text(text = viewModel.dialogState.value.title)
+                Text(text = viewModel.dialogState.value.action)
+            }
+        }
+
+        if (viewModel.showCompletedDialog.value){
+            Button(onClick = { navController.navigate(
+                Screens.PlayerScreen.route
+                        + "?${Constants.GET_PLAYER_SCORE}=${viewModel.score.value}")
+            }) {
+                Text(text = viewModel.completesRoundDialog.value.action)
             }
         }
 
