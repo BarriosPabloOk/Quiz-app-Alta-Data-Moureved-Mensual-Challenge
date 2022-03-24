@@ -6,14 +6,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pablobarriosdevs.altadata.feature_quiz.core.formatTime
-import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.util.AnswerType
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.util.QuizEvent
 
 @Composable

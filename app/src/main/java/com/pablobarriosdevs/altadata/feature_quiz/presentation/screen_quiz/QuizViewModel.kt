@@ -7,14 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.CustomTimerUS
 import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.wrapper.UseCases
-import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.util.AnswerType
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.util.DialogState
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.util.QuizEvent
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.util.QuizState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,9 +43,6 @@ class QuizViewModel @Inject constructor(
 
     private val _dialogState = mutableStateOf<DialogState>(DialogState())
     val dialogState : State<DialogState> = _dialogState
-
-    private val _eventFlow = MutableSharedFlow<AnswerType>()
-    val evenFlow : SharedFlow<AnswerType> = _eventFlow
 
     //Compose states timer
     private val timerInitialValue = 30000L
