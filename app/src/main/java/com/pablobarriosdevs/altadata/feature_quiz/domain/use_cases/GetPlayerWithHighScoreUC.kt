@@ -11,7 +11,7 @@ class GetPlayerWithHighScoreUC @Inject constructor(
     private val repository: QuizRepository
 ) {
 
-    suspend operator fun invoke(): Flow<List<Player>> {
+    operator fun invoke(): Flow<List<Player>> {
         return repository.getPlayers().map { players ->
             players.sortedByDescending { it.score }.filterIndexed { index, player ->
                 index < 10
