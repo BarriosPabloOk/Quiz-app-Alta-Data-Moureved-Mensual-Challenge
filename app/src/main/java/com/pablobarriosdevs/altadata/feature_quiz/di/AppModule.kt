@@ -2,15 +2,13 @@ package com.pablobarriosdevs.altadata.feature_quiz.di
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.pablobarriosdevs.altadata.feature_quiz.data.local.PlayerDao
 import com.pablobarriosdevs.altadata.feature_quiz.data.local.PlayerDatabase
 import com.pablobarriosdevs.altadata.feature_quiz.data.provider.QuizProvider
 import com.pablobarriosdevs.altadata.feature_quiz.data.repoitory.QuizRepositoryImpl
 import com.pablobarriosdevs.altadata.feature_quiz.domain.repository.QuizRepository
-import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.GetPlayerWithHighScore_UC
-import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.GetSingleQuestion_UC
-import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.SaveNewPlayer_UC
+import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.GetPlayerWithHighScoreUC
+import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.GetSingleQuestionUC
+import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.SaveNewPlayerUC
 import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.wrapper.UseCases
 import dagger.Module
 import dagger.Provides
@@ -46,9 +44,9 @@ object AppModule {
     @Singleton
     fun providesQuizUseWrapper(repo: QuizRepository): UseCases{
         return UseCases(
-            getPlayers = GetPlayerWithHighScore_UC(repo),
-            getSingleQuestion = GetSingleQuestion_UC(repo),
-            saveNewPlayer = SaveNewPlayer_UC(repo),
+            getPlayers = GetPlayerWithHighScoreUC(repo),
+            getSingleQuestion = GetSingleQuestionUC(repo),
+            saveNewPlayer = SaveNewPlayerUC(repo),
         )
     }
 }

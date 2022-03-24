@@ -11,10 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home.HomeScreen
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.QuizScreen
 import com.pablobarriosdevs.altadata.ui.theme.AltaDataTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +27,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    HomeScreen()
+                    QuizScreen()
                 }
             }
         }

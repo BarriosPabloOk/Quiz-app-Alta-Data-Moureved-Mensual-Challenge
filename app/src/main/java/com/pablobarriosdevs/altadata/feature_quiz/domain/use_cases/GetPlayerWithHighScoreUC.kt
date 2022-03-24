@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 
-class GetPlayerWithHighScore_UC @Inject constructor(
+class GetPlayerWithHighScoreUC @Inject constructor(
     private val repository: QuizRepository
 ) {
 

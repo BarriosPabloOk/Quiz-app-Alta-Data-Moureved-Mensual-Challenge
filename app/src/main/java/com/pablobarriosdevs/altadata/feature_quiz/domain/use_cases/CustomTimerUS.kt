@@ -5,14 +5,14 @@ import androidx.compose.runtime.MutableState
 
 
 /*
-All de logic from countdown are moved to this use case
-because help to keep clean the viewmodel class
+This Use case is not provided for AppModule.kt
 */
-class CustomTimer(
+class CustomTimerUS(
     var timerState: MutableState<Long>,
     val interval: Long = 1000L,
     var finished: MutableState<Boolean>,
     var isRunning: MutableState<Boolean>,
+    val onFinishedTime : () ->Unit,
 ) {
     private lateinit var timer: CountDownTimer
 
@@ -28,7 +28,7 @@ class CustomTimer(
             }
 
             override fun onFinish() {
-                resetTimer()
+                onFinishedTime()
             }
         }.start()
         isRunning.value = true
