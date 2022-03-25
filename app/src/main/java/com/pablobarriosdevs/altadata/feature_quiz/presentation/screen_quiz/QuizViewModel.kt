@@ -50,7 +50,7 @@ class QuizViewModel @Inject constructor(
     val completesRoundDialog : State<DialogState> = _completesRoundDialog
 
     private val _showCompletedDialog = mutableStateOf<Boolean>(false)
-    val showCompletedDialog : State<Boolean> = _showCompletedDialog
+    val finishedRound : State<Boolean> = _showCompletedDialog
 
     //Compose states timer
     private val timerInitialValue = 30000L

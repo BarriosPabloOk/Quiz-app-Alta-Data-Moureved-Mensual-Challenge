@@ -30,11 +30,14 @@ fun PlayerScreen(
         Spacer(modifier = Modifier.height(50.dp))
 
         TextField(
-            value = viewModel.playerName.value ?:"",
+            value = viewModel.playerName.value ?: "",
             onValueChange = { viewModel.onEvent(PlayerEvent.EnterName(it)) },
-            placeholder = { Text(text = "Ingresá tu nombre")}
+            placeholder = { Text(text = "Ingresá tu nombre") }
         )
+        Spacer(modifier = Modifier.height(20.dp))
 
+        Text(text = "Tu puntaje fue de ${viewModel.playerScore.value} puntos")
+        Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = {
             viewModel.onEvent(PlayerEvent.SavePlayerInLocalSource)
             //navigate
@@ -44,7 +47,7 @@ fun PlayerScreen(
             Text(text = "GUARDAR DATOS")
 
         }
-
+        Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = {
             //navigate
             navController.navigate(Screens.RankingScreen.route)
