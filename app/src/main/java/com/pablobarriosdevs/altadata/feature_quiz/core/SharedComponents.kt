@@ -29,7 +29,7 @@ fun MainBackground(
     alpha: Float = 1f
 ) {
     Image(
-        painter = painterResource(id = R.mipmap.background_4),
+        painter = painterResource(id = R.mipmap.main_background),
         contentDescription = "Background",
         modifier = Modifier
             .fillMaxSize(),
@@ -44,7 +44,7 @@ fun AlternativeBackground(
     alpha: Float = 1f
 ) {
     Image(
-        painter = painterResource(id = R.mipmap.background_3),
+        painter = painterResource(id = R.mipmap.alt_backgroun),
         contentDescription = "Background",
         modifier = Modifier
             .fillMaxSize(),
