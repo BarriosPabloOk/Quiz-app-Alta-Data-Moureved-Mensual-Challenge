@@ -5,9 +5,10 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pablobarriosdevs.altadata.feature_quiz.core.Constants
 import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.CustomTimerUS
 import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.wrapper.UseCases
-import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.util.DialogState
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.util.AnswerType
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.util.QuizEvent
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_quiz.util.QuizState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,9 +23,6 @@ class QuizViewModel @Inject constructor(
     private val useCases: UseCases
 ) : ViewModel() {
 
-    //timer object
-    private lateinit var timer: CountDownTimer
-
     //Compose states quiz
     private val _score = mutableStateOf<Int>(0)
     val score: State<Int> = _score
@@ -36,45 +34,30 @@ class QuizViewModel @Inject constructor(
     val quizState: State<QuizState> = _quizState
 
     private val _answerList = mutableStateOf<List<String>>(listOf())
-    val answerList : State<List<String>> = _answerList
+    val answerList: State<List<String>> = _answerList
 
-    //dialog states
 
-    private val _showDialog = mutableStateOf<Boolean>(false)
-    val showDialog : State<Boolean> = _showDialog
+    //Correct and Wrong answer. Finished round
 
-    private val _dialogState = mutableStateOf<DialogState>(DialogState())
-    val dialogState : State<DialogState> = _dialogState
 
-    private val _completesRoundDialog = mutableStateOf<DialogState>(DialogState())
-    val completesRoundDialog : State<DialogState> = _completesRoundDialog
-
-    private val _showCompletedDialog = mutableStateOf<Boolean>(false)
-    val finishedRound : State<Boolean> = _showCompletedDialog
+    private val _finishedRound = mutableStateOf<Boolean>(false)
+    val finishedRound: State<Boolean> = _finishedRound
 
     //Compose states timer
     private val timerInitialValue = 30000L
+
     private val _timerState = mutableStateOf<Long>(timerInitialValue)
     val timerState: State<Long> = _timerState
 
-    private val _finished = mutableStateOf<Boolean>(true)
-    val finished: State<Boolean> = _finished
-
-    private val _isRunning = mutableStateOf<Boolean>(false)
-    val isRunning: State<Boolean> = _isRunning
-
-    private val _evenFlow = MutableSharedFlow<QuizEvent>()
-    val eventFlow = _evenFlow.asSharedFlow()
+    //Used to emit a event to color buttons state
+    private val _answerFlow = MutableSharedFlow<AnswerType?>()
+    val answerFlow = _answerFlow.asSharedFlow()
 
 
     //countdown object
-    val countDown = CustomTimerUS(_timerState, 1000L, _finished, _isRunning) {
-        _completesRoundDialog.value = dialogState.value.copy(
-            title = "Lo sentimos. No hay más tiempo.",
-            score = "Puntos acumulados hasta ahora : ${_score.value}"
-        )
-        _showDialog.value = true
-
+    private val countDown = CustomTimerUS(_timerState, 1000L) {
+        viewModelScope.launch { _answerFlow.emit(AnswerType.WRONG) }
+        onEvent(QuizEvent.NextQuestion)
     }
 
 
@@ -87,42 +70,45 @@ class QuizViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: QuizEvent){
-        roundCompleted()
-        when(event){
+
+
+    fun onEvent(event: QuizEvent) {
+        //called at last quiz
+
+
+        when (event) {
             is QuizEvent.Answer -> {
-                if (event.answer == _quizState.value.answers["correctAnswer"]){
 
-                    _score.value += (_timerState.value/1000).toInt()
-                    _dialogState.value = dialogState.value.copy(
-                        title = "Felicitaciones",
-                        score = "Puntos acumulados hasta ahora : ${_score.value}",
-                        action = "Siguiente Pregunta"
-                    )
-                    _showDialog.value = true
-                    countDown.resetTimer()
+                countDown.pauseTimer()
 
-                }else{
-                    _dialogState.value = dialogState.value.copy(
-                        title = "Lo sentimos. Respuesta incorrecta",
-                        score = "Puntos acumulados hasta ahora : ${_score.value}",
-                        action = "Siguiente Pregunta"
-                    )
-                    _showDialog.value = true
-                    countDown.resetTimer()
+                viewModelScope.launch {
+                    if (event.answer == _quizState.value.answers[Constants.CORRECT_ANSWER]) {
+                        _score.value += _timerState.value.toInt() / 1000
+                        _answerFlow.emit(AnswerType.CORRECT)
+                    } else {
+                        _answerFlow.emit(AnswerType.WRONG)
+                    }
+                    onEvent(QuizEvent.NextQuestion)
+
                 }
             }
             QuizEvent.NextQuestion -> {
-                _questionNumber.value ++
-                getQuestion()
-                _showDialog.value = false
-                countDown.resetTimer()
-                countDown.startTimer()
+                viewModelScope.launch {
+                    delay(3000)
+                    _answerFlow.emit(null)
+                    getQuestion()
+                    _questionNumber.value++
+                    countDown.resetTimer()
+                    countDown.startTimer()
+                    roundCompleted()
+                }
+
             }
         }
+
     }
 
-    private fun getQuestion(){
+    private fun getQuestion() {
 
         viewModelScope.launch {
             val getQuestion = useCases.getSingleQuestion().also {
@@ -141,20 +127,11 @@ class QuizViewModel @Inject constructor(
         }
     }
 
-    private fun roundCompleted() = viewModelScope.launch {
-        if (_questionNumber.value ==10){
-            _completesRoundDialog.value = completesRoundDialog.value.copy(
-                title = "Haz terminado esta ronda de preguntas",
-                score= _score.value.toString(),
-                action = "Continuar"
-            )
-            _showCompletedDialog.value = true
-
+    private fun roundCompleted() {
+        if (_questionNumber.value > 10) {
+            _finishedRound.value = true
         }
     }
-
-
-
 
 
 }

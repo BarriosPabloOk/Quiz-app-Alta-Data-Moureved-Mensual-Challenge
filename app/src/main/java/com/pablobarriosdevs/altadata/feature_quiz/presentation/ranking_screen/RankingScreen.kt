@@ -10,8 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.pablobarriosdevs.altadata.feature_quiz.core.StartEndButton
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.navigation.Screens
-import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home.components.StartButton
+
 
 @Composable
 fun RankingScreen(
@@ -37,9 +38,9 @@ fun RankingScreen(
                 }
             }
             item {
-                StartButton(
+                StartEndButton(
                 onClick = { navController.navigate(Screens.HomeScreen.route) },
-                modifier = Modifier.width(210.dp)
+                modifier = Modifier.width(250.dp)
             ) }
         }
 

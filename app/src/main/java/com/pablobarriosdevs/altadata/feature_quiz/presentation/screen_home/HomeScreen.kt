@@ -2,22 +2,22 @@ package com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.pablobarriosdevs.altadata.feature_quiz.core.MainBackground
+import com.pablobarriosdevs.altadata.feature_quiz.core.StartEndButton
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.navigation.Screens
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home.components.RankingButton
-import com.pablobarriosdevs.altadata.feature_quiz.presentation.screen_home.components.StartButton
+import com.pablobarriosdevs.altadata.ui.theme.badaboom
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -33,10 +33,12 @@ fun HomeScreen(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "ALTA\nDATA",
-            fontSize = 50.sp,
-            fontWeight = FontWeight.Black,
-            fontStyle = FontStyle.Italic,
+            text = "ALTA\n   DATA",
+            fontSize = MaterialTheme.typography.h1.fontSize,
+            style = MaterialTheme.typography.h1.copy(
+                fontWeight = FontWeight.Normal,
+                fontFamily = badaboom
+            )
         )
     }
     Column(
@@ -52,11 +54,11 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(180.dp))
 
-        StartButton(
+        StartEndButton(
             onClick = {
                 navController.navigate(Screens.QuizScreen.route)
             },
-            modifier = Modifier.width(210.dp)
+            modifier = Modifier.width(250.dp)
         )
         Spacer(modifier = Modifier.height(30.dp))
         RankingButton(onClick = {

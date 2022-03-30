@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun RankingButton(
@@ -25,17 +26,18 @@ fun RankingButton(
         onClick = onClick,
         modifier = modifier,
         shape = CircleShape,
-        contentPadding = PaddingValues(10.dp),
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp),
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.error,
-            contentColor = Color.White
-        )
+            backgroundColor = MaterialTheme.colors.primaryVariant,
+            contentColor = MaterialTheme.colors.onSurface
+        ),
     ) {
         Text(
             text = "Ranking",
-            fontWeight = FontWeight.Normal,
-            fontSize = MaterialTheme.typography.body2.fontSize,
             textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            fontSize = 15.sp
+
         )
     }
 

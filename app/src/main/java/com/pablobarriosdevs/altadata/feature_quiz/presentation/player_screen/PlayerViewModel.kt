@@ -11,6 +11,7 @@ import com.pablobarriosdevs.altadata.feature_quiz.domain.model.Player
 import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.wrapper.UseCases
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.player_screen.util.PlayerEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +27,8 @@ class PlayerViewModel @Inject constructor(
 
     private val _playerName = mutableStateOf<String?>(null)
     val playerName : State<String?> = _playerName
+
+
 
     init {
         savedStateHandle.get<String>(Constants.GET_PLAYER_SCORE)?.let {

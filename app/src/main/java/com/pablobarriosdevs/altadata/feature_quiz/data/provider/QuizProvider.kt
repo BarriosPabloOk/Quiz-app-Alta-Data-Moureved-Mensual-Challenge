@@ -8,7 +8,7 @@ class QuizProvider {
 
     fun randomQuiz(): Quiz {
         val shuffle = quizList.shuffled()
-        val result = shuffle[1]
+        val result = shuffle.random()
         return result
     }
 
