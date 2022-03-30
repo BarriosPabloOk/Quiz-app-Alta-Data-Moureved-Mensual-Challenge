@@ -8,8 +8,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.navigation.Navigation
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.player_screen.PlayerScreen
 import com.pablobarriosdevs.altadata.ui.theme.AltaDataTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             AltaDataTheme(darkTheme = false) {
                 // A surface container using the 'background' color from the theme
@@ -27,6 +30,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     Navigation(navController = navController)
+
 
                 }
             }

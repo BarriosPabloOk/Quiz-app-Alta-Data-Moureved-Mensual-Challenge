@@ -52,14 +52,16 @@ fun HomeScreen(
         //to be replaced with a logo
 
 
-        Spacer(modifier = Modifier.height(180.dp))
+        Spacer(modifier = Modifier.height(150.dp))
 
         StartEndButton(
             onClick = {
                 navController.navigate(Screens.QuizScreen.route)
             },
+            text = "Empezar a jugar",
             modifier = Modifier.width(250.dp)
         )
+
         Spacer(modifier = Modifier.height(30.dp))
         RankingButton(onClick = {
             navController.navigate(Screens.RankingScreen.route)

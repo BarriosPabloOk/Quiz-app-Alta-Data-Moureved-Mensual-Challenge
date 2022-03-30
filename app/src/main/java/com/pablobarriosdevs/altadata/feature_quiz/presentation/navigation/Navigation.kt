@@ -30,19 +30,21 @@ fun Navigation(
     NavHost(navController = navController,
     startDestination = Screens.HomeScreen.route){
         composable(route = Screens.HomeScreen.route){
+
             HomeScreen(navController){ MainBackground()}
         }
         composable(route = Screens.QuizScreen.route){
-            QuizScreen(
-                navController = navController
-            ){ AlternativeBackground()}
+
+            QuizScreen(navController = navController){ AlternativeBackground(alpha = 0.5f)}
         }
         composable(route= Screens.PlayerScreen.route
                 +"?${Constants.GET_PLAYER_SCORE}={${Constants.GET_PLAYER_SCORE}}"){
-            PlayerScreen(navController)
+
+            PlayerScreen(navController){ AlternativeBackground(alpha = 0.5f)}
         }
         composable(route = Screens.RankingScreen.route){
-            RankingScreen(navController)
+
+            RankingScreen(navController,){MainBackground(alpha = 0.5f)}
         }
 
     }

@@ -9,9 +9,12 @@ import androidx.lifecycle.viewModelScope
 import com.pablobarriosdevs.altadata.feature_quiz.core.Constants
 import com.pablobarriosdevs.altadata.feature_quiz.domain.model.Player
 import com.pablobarriosdevs.altadata.feature_quiz.domain.use_cases.wrapper.UseCases
+import com.pablobarriosdevs.altadata.feature_quiz.domain.util.NamePlayerException
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.player_screen.util.PlayerEvent
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.player_screen.util.UiEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,11 +25,14 @@ class PlayerViewModel @Inject constructor(
 ): ViewModel() {
 
 
-    private val _playerScore = mutableStateOf<Int?>(null)
+    private val _playerScore = mutableStateOf<Int>(0)
     val playerScore : State<Int?> = _playerScore
 
-    private val _playerName = mutableStateOf<String?>(null)
+    private val _playerName = mutableStateOf<String>("")
     val playerName : State<String?> = _playerName
+
+    private val _evenFlow = MutableSharedFlow<UiEvents>()
+    val eventFlow: SharedFlow<UiEvents> = _evenFlow
 
 
 
@@ -45,12 +51,24 @@ class PlayerViewModel @Inject constructor(
 
             PlayerEvent.SavePlayerInLocalSource -> {
                 viewModelScope.launch {
-                    useCases.saveNewPlayer(
-                        Player(
-                            name = _playerName.value ?: "Crack sin nombre",
-                            score = _playerScore.value ?: 0
+                    try {
+                        useCases.saveNewPlayer(
+                            Player(
+                                name = _playerName.value ,
+                                score = _playerScore.value
+                            )
                         )
-                    )
+
+                        _evenFlow.emit(UiEvents.SavePlayer)
+
+                    } catch (e: NamePlayerException) {
+                        _evenFlow.emit(
+                            UiEvents.ShowSnackBar(
+                                message = e.message ?: "No se pudo guardar el jugador"
+                            )
+                        )
+                    }
+
                 }
             }
         }

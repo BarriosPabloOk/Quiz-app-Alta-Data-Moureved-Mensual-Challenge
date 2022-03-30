@@ -1,12 +1,15 @@
 package com.pablobarriosdevs.altadata.feature_quiz.presentation.player_screen
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,18 +21,38 @@ import com.pablobarriosdevs.altadata.feature_quiz.core.AlternativeBackground
 import com.pablobarriosdevs.altadata.feature_quiz.core.CustomCard
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.navigation.Screens
 import com.pablobarriosdevs.altadata.feature_quiz.presentation.player_screen.util.PlayerEvent
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.player_screen.util.UiEvents
 import com.pablobarriosdevs.altadata.ui.theme.AltaDataTheme
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun PlayerScreen(
     navController: NavController,
     viewModel: PlayerViewModel = hiltViewModel(),
+    Background: @Composable () -> Unit,
 ) {
+    val context = LocalContext.current
 
-    AlternativeBackground()
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { events ->
+            when (events) {
+                is UiEvents.ShowSnackBar -> {
+                    Toast.makeText(context, events.message, Toast.LENGTH_SHORT).show()
+                }
+                is UiEvents.SavePlayer -> {
+                    navController.navigate(Screens.RankingScreen.route)
+                }
+
+            }
+        }
+    }
+
+
+    Background()
     CustomCard {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -53,7 +76,11 @@ fun PlayerScreen(
                         fontWeight = FontWeight.Black
 
                     )
-                }
+                },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    cursorColor = MaterialTheme.colors.primaryVariant,
+                    focusedBorderColor = MaterialTheme.colors.primaryVariant
+                )
             )
             Spacer(modifier = Modifier.height(50.dp))
 
@@ -68,7 +95,7 @@ fun PlayerScreen(
             Button(
                 onClick = {
                     viewModel.onEvent(PlayerEvent.SavePlayerInLocalSource)
-                    navController.navigate(Screens.RankingScreen.route)
+
                 },
                 modifier = Modifier
                     .height(40.dp),
@@ -119,3 +146,4 @@ fun PlayerScreen(
 //        PlayerScreen()
 //    }
 //}
+

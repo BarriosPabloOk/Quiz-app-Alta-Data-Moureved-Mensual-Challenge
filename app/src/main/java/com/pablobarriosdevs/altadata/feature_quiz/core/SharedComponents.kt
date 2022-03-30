@@ -25,7 +25,9 @@ import com.pablobarriosdevs.altadata.R
 
 //Backgrounds
 @Composable
-fun MainBackground() {
+fun MainBackground(
+    alpha: Float = 1f
+) {
     Image(
         painter = painterResource(id = R.mipmap.background_4),
         contentDescription = "Background",
@@ -33,11 +35,14 @@ fun MainBackground() {
             .fillMaxSize(),
         alignment = Alignment.Center,
         contentScale = ContentScale.Crop,
+        alpha = alpha
     )
 }
 
 @Composable
-fun AlternativeBackground() {
+fun AlternativeBackground(
+    alpha: Float = 1f
+) {
     Image(
         painter = painterResource(id = R.mipmap.background_3),
         contentDescription = "Background",
@@ -45,20 +50,10 @@ fun AlternativeBackground() {
             .fillMaxSize(),
         alignment = Alignment.Center,
         contentScale = ContentScale.Crop,
+        alpha = alpha
     )
 }
 
-@Composable
-fun DialogBackground() {
-    Image(
-        painter = painterResource(id = R.mipmap.dialog_background),
-        contentDescription = "Background",
-        modifier = Modifier
-            .fillMaxSize(),
-        alignment = Alignment.Center,
-        contentScale = ContentScale.Crop,
-    )
-}
 
 //Card
 
@@ -80,7 +75,7 @@ fun CustomCard(
                 .background(
                     MaterialTheme.colors.surface
                 )
-                .padding(20.dp)
+                .padding(20.dp,)
 
         ) {
             Content()
@@ -92,7 +87,8 @@ fun CustomCard(
 //buttons
 @Composable
 fun StartEndButton(
-    onClick: ()->Unit,
+    onClick: () -> Unit,
+    text: String,
     modifier: Modifier = Modifier
 ) {
     Button(
@@ -106,7 +102,7 @@ fun StartEndButton(
         )
     ) {
         Text(
-            text = "Empezar a Jugar",
+            text = text,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp
