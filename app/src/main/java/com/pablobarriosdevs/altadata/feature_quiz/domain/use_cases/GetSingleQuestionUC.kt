@@ -5,11 +5,12 @@ import com.pablobarriosdevs.altadata.feature_quiz.domain.repository.QuizReposito
 import javax.inject.Inject
 
 
-class GetSingleQuestion_UC @Inject constructor(
+class GetSingleQuestionUC @Inject constructor(
     private val repository: QuizRepository
 ) {
 
     suspend operator fun invoke(): Quiz? {
         return repository.getQuestion()
+
     }
 }

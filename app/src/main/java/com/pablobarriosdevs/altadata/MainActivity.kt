@@ -6,38 +6,35 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.colorResource
+import androidx.core.view.WindowCompat
+import androidx.navigation.compose.rememberNavController
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.navigation.Navigation
+import com.pablobarriosdevs.altadata.feature_quiz.presentation.player_screen.PlayerScreen
 import com.pablobarriosdevs.altadata.ui.theme.AltaDataTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
-            AltaDataTheme {
+            AltaDataTheme(darkTheme = false) {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colors.primary
                 ) {
-                    Greeting("Android")
+                    val navController = rememberNavController()
+                    Navigation(navController = navController)
+
+
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    AltaDataTheme {
-        Greeting("Android")
-    }
-}
